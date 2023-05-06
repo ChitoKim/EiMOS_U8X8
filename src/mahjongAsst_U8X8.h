@@ -63,7 +63,7 @@
 class mahjongAsst_U8X8 : public mahjongAsst
 {
 private:
-  U8X8 *u8x8_p[4];
+  U8X8 *u8x8_p[4] = {nullptr, nullptr, nullptr, nullptr};
 public:
   mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[]);
   mahjongAsst_U8X8(int charge[], int analog[], float v_unit[], float ref[]);

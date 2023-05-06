@@ -79,29 +79,18 @@ mahjongAsst_U8X8::mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 
 mahjongAsst_U8X8::mahjongAsst_U8X8(int charge[], int analog[], float v_unit[], float ref[])
 : mahjongAsst(charge, analog, v_unit, ref)
 {
-  setNullU8X8();
 }
 mahjongAsst_U8X8::mahjongAsst_U8X8(int analog[], float v_unit[], float ref[]) 
 : mahjongAsst(analog, v_unit, ref)
 { 
-  setNullU8X8();
 }
 mahjongAsst_U8X8::mahjongAsst_U8X8(int charge[], int analog, float v_unit[], float ref[])
 : mahjongAsst(charge, analog, v_unit, ref)
 { 
-  setNullU8X8();
 }
 mahjongAsst_U8X8::mahjongAsst_U8X8(int analog, float v_unit[], float ref[])
 : mahjongAsst(analog, v_unit, ref)
 {  
-  setNullU8X8();
-}
-void
-mahjongAsst_U8X8::setNullU8X8()
-{
-  int i;
-  for(i = 0; i < 4; i++)
-    u8x8_p[i] = nullptr;
 }
 void
 mahjongAsst_U8X8::setDisplay(U8X8 *u8x8[])
@@ -169,10 +158,10 @@ mahjongAsst_U8X8::scoreDisplay(int player)
   //display scores onto the LCD display
   //mode: NORMAL(actual score) or DIFF(difference to my score)
   //err[]: check if sticks are in wrong places
-  int *score = getVAL()->score;
-  int *error = getVAL()->error;
-  int mode  = (getVAL()->mode)[player];
-  int honba  = getVAL()->honba;
+  int *score = this->getScore();
+  int *error = this->getError();
+  int mode  =  (this->getMode())[player];
+  int honba  = this->getHonba();
   U8X8* dis = (this->u8x8_p)[player];
 
   int score_self = score[player];

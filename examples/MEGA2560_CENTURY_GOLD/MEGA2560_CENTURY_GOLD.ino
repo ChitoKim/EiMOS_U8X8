@@ -61,6 +61,7 @@ setup()
   Asst.setNSlot(3);
   Asst.setPullType(INPUT_PULLUP);
   Asst.setADCResolution(10);
+  // Asst.setOffseet(200);
   Asst.setMesType(CAP);
   Asst.setParRes(CENTURY_GOLD_R_PAR);
   Asst.setDisplay(u8x8);
