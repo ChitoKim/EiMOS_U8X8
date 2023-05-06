@@ -8,6 +8,17 @@ mahjongAsst Library with U8G2 displays.
 
 [U8g2](https://github.com/olikraus/u8g2)
 
+# Features
+-Realtime score tracking for all 4 people
+
+-Outputs error message when the sticks are in wrong places
+
+-Manage display mode(NORMAL, DIFF, PM) with push buttons for each player
+
+-Manage honbas with a push button
+ 
+-Offer riichi counters
+
 # Supported Models
   
   # Resistors
