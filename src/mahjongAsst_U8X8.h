@@ -63,6 +63,7 @@
 class mahjongAsst_U8X8 : public mahjongAsst
 {
 private:
+  unsigned long lastDisplayTime;
   U8X8 *u8x8_p[4] = {nullptr, nullptr, nullptr, nullptr};
 public:
   mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[]);
@@ -78,7 +79,7 @@ public:
   void setI2CAddress(int a, int b);
   void setI2CAddress(int a[]);
   void scoreDisplay(int player);
-  void scoreDisplayLoop(int pmDelay_ms = 0);
+  void scoreDisplayLoop(int period);
   int  right(int player);
   int  facing(int player);
   int  left(int player);

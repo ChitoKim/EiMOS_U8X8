@@ -72,7 +72,7 @@ const char U8X8_CHAR_RIICHI = '\x20';
 const char U8X8_CHAR_HONBA = '\x21';
 
 mahjongAsst_U8X8::mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[])
-: mahjongAsst(mux, env, pin, val)
+: mahjongAsst(mux, env, pin, val), lastDisplayTime(0L)
 {
   setDisplay(u8x8);
 }
@@ -136,6 +136,7 @@ mahjongAsst_U8X8::initDisplay()
     dis = (this->u8x8_p)[i];
     dis->clearDisplay();
   }
+  lastDisplayTime = millis();
   delay(1000);
 }
 void
@@ -271,18 +272,18 @@ mahjongAsst_U8X8::scoreDisplay(int player)
   dis->print("  ");
 }  
 void
-mahjongAsst_U8X8::scoreDisplayLoop(int pmDelay_ms)
+mahjongAsst_U8X8::scoreDisplayLoop(int period)
 {
   //display the four scores on four displays, if mode is PM, delay some time(default 0)
   int i;
-  int *mode = getVAL()->mode;
-  for(i = 0; i < 4; i++)
+  unsigned long currentTime = millis(); 
+  if(currentTime > lastDisplayTime + period)
   {
-    this->scoreDisplay(i);
-  }
-  if(mode[0] == PM || mode[1] == PM || mode[2] == PM || mode[3] == PM)
-  {
-    delay(pmDelay_ms);
+    for(i = 0; i < 4; i++)
+    {
+      this->scoreDisplay(i);
+    }
+    lastDisplayTime = currentTime;
   }
 }
 
