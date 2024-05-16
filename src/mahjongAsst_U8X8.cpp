@@ -72,7 +72,7 @@ const char U8X8_CHAR_RIICHI = '\x20';
 const char U8X8_CHAR_HONBA = '\x21';
 
 mahjongAsst_U8X8::mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[])
-: mahjongAsst(mux, env, pin, val), lastDisplayTime(0L)
+: mahjongAsst(mux, env, pin, val)
 {
   setDisplay(u8x8);
 }
@@ -92,6 +92,15 @@ mahjongAsst_U8X8::mahjongAsst_U8X8(int analog, float v_unit[], float ref[])
 : mahjongAsst(analog, v_unit, ref)
 {  
 }
+mahjongAsst_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
+:mahjongAsst(charge, ext_adc, v_unit, ref)
+{
+}
+mahjongAsst_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
+:mahjongAsst(ext_adc, v_unit, ref)
+{
+}
+
 void
 mahjongAsst_U8X8::setDisplay(U8X8 *u8x8[])
 {   

@@ -56,14 +56,13 @@
 
 #ifndef _MAHJONGASST_U8X8_H
 #define _MAHJONGASST_U8X8_H
-#endif
 #include <mahjongAsst.h>
 #include <U8x8lib.h>
 
 class mahjongAsst_U8X8 : public mahjongAsst
 {
 private:
-  unsigned long lastDisplayTime;
+  unsigned long lastDisplayTime = 0L; 
   U8X8 *u8x8_p[4] = {nullptr, nullptr, nullptr, nullptr};
 public:
   mahjongAsst_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[]);
@@ -71,6 +70,8 @@ public:
   mahjongAsst_U8X8(int analog[], float v_unit[], float ref[]); 
   mahjongAsst_U8X8(int charge[], int analog, float v_unit[], float ref[]);
   mahjongAsst_U8X8(int analog, float v_unit[], float ref[]);
+  mahjongAsst_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[]);
+  mahjongAsst_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[]);
   U8X8** getU8X8();
   void setNullU8X8();
   void setDisplay(U8X8* u8x8[]);
@@ -84,3 +85,4 @@ public:
   int  facing(int player);
   int  left(int player);
 };
+#endif
