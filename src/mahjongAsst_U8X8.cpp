@@ -92,11 +92,11 @@ mahjongAsst_U8X8::mahjongAsst_U8X8(int analog, float v_unit[], float ref[])
 : mahjongAsst(analog, v_unit, ref)
 {  
 }
-mahjongAsst_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
+mahjongAsst_U8X8::mahjongAsst_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
 :mahjongAsst(charge, ext_adc, v_unit, ref)
 {
 }
-mahjongAsst_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
+mahjongAsst_U8X8::mahjongAsst_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
 :mahjongAsst(ext_adc, v_unit, ref)
 {
 }
