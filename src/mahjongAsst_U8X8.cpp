@@ -92,6 +92,15 @@ mahjongAsst_U8X8::mahjongAsst_U8X8(int analog, float v_unit[], float ref[])
 : mahjongAsst(analog, v_unit, ref)
 {  
 }
+mahjongAsst_U8X8::mahjongAsst_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
+:mahjongAsst(charge, ext_adc, v_unit, ref)
+{
+}
+mahjongAsst_U8X8::mahjongAsst_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
+:mahjongAsst(ext_adc, v_unit, ref)
+{
+}
+
 void
 mahjongAsst_U8X8::setDisplay(U8X8 *u8x8[])
 {   
@@ -136,6 +145,7 @@ mahjongAsst_U8X8::initDisplay()
     dis = (this->u8x8_p)[i];
     dis->clearDisplay();
   }
+  lastDisplayTime = millis();
   delay(1000);
 }
 void
@@ -271,18 +281,18 @@ mahjongAsst_U8X8::scoreDisplay(int player)
   dis->print("  ");
 }  
 void
-mahjongAsst_U8X8::scoreDisplayLoop(int pmDelay_ms)
+mahjongAsst_U8X8::scoreDisplayLoop(int period)
 {
   //display the four scores on four displays, if mode is PM, delay some time(default 0)
   int i;
-  int *mode = getVAL()->mode;
-  for(i = 0; i < 4; i++)
+  unsigned long currentTime = millis(); 
+  if(currentTime > lastDisplayTime + period)
   {
-    this->scoreDisplay(i);
-  }
-  if(mode[0] == PM || mode[1] == PM || mode[2] == PM || mode[3] == PM)
-  {
-    delay(pmDelay_ms);
+    for(i = 0; i < 4; i++)
+    {
+      this->scoreDisplay(i);
+    }
+    lastDisplayTime = currentTime;
   }
 }
 
