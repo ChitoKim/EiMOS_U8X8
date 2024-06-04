@@ -44,7 +44,7 @@ float R_REF[] =
 float CENTURY_GOLD_R_PAR[] =
 {
   1000.0f, PIN_NONE, PIN_NONE, PIN_NONE
-};d
+};
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled0(SCL0, SDA0, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled1(SCL1, SDA1, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled2(SCL2, SDA2, U8X8_PIN_NONE);
@@ -54,7 +54,7 @@ U8X8 u8x8[4] = {oled0, oled1, oled2, oled3};
 mahjongAsst_U8X8 Asst(charge_pin, analog_pin, CAP_CENTURY_GOLD, R_REF); //CENTURY TENPAL, GOLD sticks
 //mahjongAsst_U8X8 Asst(charge_pin, analog_pin, CAP_CENTURY_SILVER, R_REF); //CENTURY TENPAL, SILVER sticks
 
-voi
+void
 setup()
 {
   int i;

@@ -30,11 +30,34 @@ U8X8_SSD1306_128X64_NONAME_HW_I2C oled1(U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled2(U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled3(U8X8_PIN_NONE);
 
+/* Software I2C */
+// enum SWI2CPIN
+// {
+//   SW_SDA0 = 12,
+//   SW_SCL0 = 13,
+//   SW_SDA1 = 14,
+//   SW_SCL1 = 15,
+//   SW_SDA2 = 16,
+//   SW_SCL2 = 17,
+//   SW_SDA3 = 18,
+//   SW_SCL3 = 19
+// };
+// U8X8_SSD1306_128X64_NONAME_SW_I2C oled0(SW_SCL0, SW_SDA0, U8X8_PIN_NONE);
+// U8X8_SSD1306_128X64_NONAME_SW_I2C oled1(SW_SCL1, SW_SDA1, U8X8_PIN_NONE);
+// U8X8_SSD1306_128X64_NONAME_SW_I2C oled2(SW_SCL2, SW_SDA2, U8X8_PIN_NONE);
+// U8X8_SSD1306_128X64_NONAME_SW_I2C oled3(SW_SCL3, SW_SDA3, U8X8_PIN_NONE);
+
 U8X8 oled[] = {oled0, oled1, oled2, oled3};
 
 
 int i2c_address[4] = {0x3C *2, 0x3D * 2, 0x3C *2, 0x3D * 2};
 float weight[] = {0.3f, 0.3f, 0.3f, 0.3f};
+enum I2CPIN {
+  _SDA0 = 4,
+  _SCL0 = 5,
+  _SDA1 = 2,
+  _SCL1 = 3
+};
 
 
 void
@@ -51,15 +74,20 @@ setup()
   // Asst.setModeButton(button_mode); // uncomment to enable mode buttons
   // Asst.setHonbaButton(button_honba); // uncomment to enable a honba button
 
+  Wire.setSDA(_SDA0);
+  Wire.setSCL(_SCL0);
   Wire.begin();
-  Wire1.begin();
+
+  Wire1.setSDA(_SDA1);
+  Wire1.setSCL(_SCL1); // set I2C pins
+  Wire1.begin(); //tweak pins_arduino.h for second I2C
   
   Asst.setDisplay(oled);
   Asst.setI2CAddress(i2c_address);
   Asst.initDisplay();
 
   Asst.initExtADC();
-  Asst.setExtADC(1, 16, 3.3f);
+  Asst.setExtADC(/*setGain*/ 1, /*ADC Resolution*/16, /*VCC*/3.3f);
   Asst.begin();
 }
 void
