@@ -1,8 +1,9 @@
 /*
   Special Thanks to Mahjong
 
-  EiMOS_U8X8.cpp
+  EiMOS_U8X8 - EiMOS_U8X8.cpp
   EiMOS Library combined with U8G2 displays
+  Formerly known as mahjongAsst_U8X8
 
  *  Copyright (c) 2023, Chito Kim
  *  All rights reserved.
