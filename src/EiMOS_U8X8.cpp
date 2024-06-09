@@ -133,7 +133,7 @@ EiMOS_U8X8::initDisplay()
     dis->setPowerSave(0);
     dis->setFont(_font);
     dis->setCursor(0,0);
-    dis->print("Maj Asst");
+    dis->print("EiMOS");
     dis->setCursor(0, 2);
     dis->print("w/ OLED");
     dis->setCursor(0, 4);
