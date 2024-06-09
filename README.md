@@ -1,6 +1,5 @@
-# EiMOS_U8X8
+# EiMOS_U8X8 : EiMOS Library with U8G2 displays.
 
-EiMOS Library with U8G2 displays.
 Formerly known as mahjongAsst_U8X8.
 
 # Dependencies
