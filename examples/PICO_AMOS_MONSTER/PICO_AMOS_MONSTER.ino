@@ -1,4 +1,4 @@
-#include <mahjongAsst_U8X8.h>
+#include <EiMOS_U8X8.h>
 int button_mode[] =
 {
   6, 7, 8, 9
@@ -22,7 +22,7 @@ ADS1115 ADC2(0x4A, &Wire);
 ADS1115 ADC3(0x4B, &Wire);
 
 ADS1X15 *adc[] = {&ADC0, &ADC1, &ADC2, &ADC3};
-mahjongAsst_U8X8 Asst(adc, RES_AMOS_MONSTER, R_REF);
+EiMOS_U8X8 EM(adc, RES_AMOS_MONSTER, R_REF);
 
 /* Hardware I2C*/
 U8X8_SSD1306_128X64_NONAME_HW_I2C oled0(U8X8_PIN_NONE);
@@ -63,16 +63,16 @@ enum I2CPIN {
 void
 setup()
 {
-  Asst.setNSlot(4);          //set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
+  EM.setNSlot(4);          //set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
 
-  Asst.setMesType(RES);     //choose measure type; resistance(RES) or CAP(capacitance)
-  Asst.setPullType(PULLUP); //choose whether to pull up or down the reference resistors
+  EM.setMesType(RES);     //choose measure type; resistance(RES) or CAP(capacitance)
+  EM.setPullType(PULLUP); //choose whether to pull up or down the reference resistors
                               //one of these: PULLUP, PULLDOWN, INPUT_PULLUP
                               
-  // Asst.setOffset(200);    // uncomment to enable busting sticks
-  Asst.setWeight(weight);
-  // Asst.setModeButton(button_mode); // uncomment to enable mode buttons
-  // Asst.setHonbaButton(button_honba); // uncomment to enable a honba button
+  // EM.setOffset(200);    // uncomment to enable busting sticks
+  EM.setWeight(weight);
+  // EM.setModeButton(button_mode); // uncomment to enable mode buttons
+  // EM.setHonbaButton(button_honba); // uncomment to enable a honba button
 
   Wire.setSDA(_SDA0);
   Wire.setSCL(_SCL0);
@@ -82,17 +82,17 @@ setup()
   Wire1.setSCL(_SCL1); // set I2C pins
   Wire1.begin(); //tweak pins_arduino.h for second I2C
   
-  Asst.setDisplay(oled);
-  Asst.setI2CAddress(i2c_address);
-  Asst.initDisplay();
+  EM.setDisplay(oled);
+  EM.setI2CAddress(i2c_address);
+  EM.initDisplay();
 
-  Asst.initExtADC();
-  Asst.setExtADC(/*setGain*/ 1, /*ADC Resolution*/16, /*VCC*/3.3f);
-  Asst.begin();
+  EM.initExtADC();
+  EM.setExtADC(/*setGain*/ 1, /*ADC Resolution*/16, /*VCC*/3.3f);
+  EM.begin();
 }
 void
 loop()
 {
-  Asst.loop(500);
-  Asst.scoreDisplayLoop(500);
+  EM.loop(500);
+  EM.scoreDisplayLoop(500);
 }

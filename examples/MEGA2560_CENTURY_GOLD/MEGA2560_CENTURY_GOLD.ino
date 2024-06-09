@@ -1,4 +1,4 @@
-#include <mahjongAsst_U8X8.h>
+#include <EiMOS_U8X8.h>
 
 #define  SCL0 22
 #define  SDA0 23
@@ -51,28 +51,28 @@ U8X8_SSD1306_128X64_NONAME_SW_I2C oled2(SCL2, SDA2, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled3(SCL3, SDA3, U8X8_PIN_NONE);
 U8X8 u8x8[4] = {oled0, oled1, oled2, oled3};
 
-mahjongAsst_U8X8 Asst(charge_pin, analog_pin, CAP_CENTURY_GOLD, R_REF); //CENTURY TENPAL, GOLD sticks
-//mahjongAsst_U8X8 Asst(charge_pin, analog_pin, CAP_CENTURY_SILVER, R_REF); //CENTURY TENPAL, SILVER sticks
+EiMOS_U8X8 EM(charge_pin, analog_pin, CAP_CENTURY_GOLD, R_REF); //CENTURY TENPAL, GOLD sticks
+//EiMOS_U8X8 EM(charge_pin, analog_pin, CAP_CENTURY_SILVER, R_REF); //CENTURY TENPAL, SILVER sticks
 
 void
 setup()
 {
   int i;
-  Asst.setNSlot(3);
-  Asst.setPullType(INPUT_PULLUP);
-  Asst.setADCResolution(10);
-  // Asst.setOffseet(200);
-  Asst.setMesType(CAP);
-  Asst.setParRes(CENTURY_GOLD_R_PAR);
-  Asst.setDisplay(u8x8);
-  Asst.initDisplay();
-  Asst.setModeButton(button_mode);
-  Asst.setHonbaButton(button_honba);
-  Asst.begin();
+  EM.setNSlot(3);
+  EM.setPullType(INPUT_PULLUP);
+  EM.setADCResolution(10);
+  // EM.setOffseet(200);
+  EM.setMesType(CAP);
+  EM.setParRes(CENTURY_GOLD_R_PAR);
+  EM.setDisplay(u8x8);
+  EM.initDisplay();
+  EM.setModeButton(button_mode);
+  EM.setHonbaButton(button_honba);
+  EM.begin();
 }
 void
 loop()
 {
-  Asst.loop();
-  Asst.scoreDisplayLoop();
+  EM.loop();
+  EM.scoreDisplayLoop();
 }

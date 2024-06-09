@@ -1,10 +1,10 @@
-# mahjongAsst_U8X8
+# EiMOS_U8X8 : EiMOS Library with U8G2 displays.
 
-mahjongAsst Library with U8G2 displays.
+Formerly known as mahjongAsst_U8X8.
 
 # Dependencies
 
-[mahjongAsst](https://github.com/ChitoKim/mahjongAsst)
+[EiMOS](https://github.com/ChitoKim/EiMOS)
 
 [U8g2](https://github.com/olikraus/u8g2)
 
