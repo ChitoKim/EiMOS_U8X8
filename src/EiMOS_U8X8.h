@@ -81,7 +81,7 @@ public:
   void setI2CAddress(int a, int b);
   void setI2CAddress(int a[]);
   void scoreDisplay(int player);
-  void scoreDisplayLoop(int period);
+  void scoreDisplayLoop(int period = 0);
   int  right(int player);
   int  facing(int player);
   int  left(int player);
