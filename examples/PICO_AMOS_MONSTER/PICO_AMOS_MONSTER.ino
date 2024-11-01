@@ -50,7 +50,7 @@ U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled3(U8X8_PIN_NONE);
 U8X8 oled[] = {oled0, oled1, oled2, oled3};
 
 
-int i2c_address[4] = {0x3C *2, 0x3D * 2, 0x3C *2, 0x3D * 2};
+int i2c_address[4] = {0x78, 0x7A, 0x78, 0x7A};
 float weight[] = {0.3f, 0.3f, 0.3f, 0.3f};
 enum I2CPIN {
   _SDA0 = 4,
