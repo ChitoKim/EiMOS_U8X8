@@ -12,5 +12,6 @@ FILES=("$SRC_DIR/EiMOS_U8X8.cpp" "$SRC_DIR/EiMOS_U8X8.h" "$EX_DIR/ESP32_AMOS_MON
 for FILE in "${FILES[@]}"; do
   clang-format -i -style=file:"$SCRIPT_DIR"/.clang-format "$FILE"
   vim -c '%s/=\n  {\n/= {\r/g' -c 'wq' "$FILE"
+  vim -c '%s/=\n  {{/= {\r  {/g' -c 'wq' "$FILE"
   clang-format -i -style=file:"$SCRIPT_DIR"/.clang-format "$FILE"
 done
