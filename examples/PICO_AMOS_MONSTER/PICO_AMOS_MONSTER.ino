@@ -1,17 +1,12 @@
 #include <EiMOS_U8X8.h>
-int button_mode[] =
-{
-  6, 7, 8, 9
-};
+int button_mode[] = {
+  6, 7, 8, 9};
 int button_honba = 10;
-float RES_AMOS_MONSTER[] =
-{
-  //in kiloohms
-  20.0f, 100.0f, 1000.0f ,1000.0f
-};
-float R_REF[] =
-{
-  //in kiloohms
+float RES_AMOS_MONSTER[] = {
+  // in kiloohms
+  20.0f, 100.0f, 1000.0f, 1000.0f};
+float R_REF[] = {
+  // in kiloohms
   10.0f, 10.0f, 10.0f, 10.0f
   // 2.2f, 10.0f, 100.0f, 100.0f
 };
@@ -49,26 +44,25 @@ U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled3(U8X8_PIN_NONE);
 
 U8X8 oled[] = {oled0, oled1, oled2, oled3};
 
-
 int i2c_address[4] = {0x78, 0x7A, 0x78, 0x7A};
 float weight[] = {0.3f, 0.3f, 0.3f, 0.3f};
-enum I2CPIN {
+enum I2CPIN
+{
   _SDA0 = 4,
   _SCL0 = 5,
   _SDA1 = 2,
   _SCL1 = 3
 };
 
-
 void
 setup()
 {
-  EM.setNSlot(4);          //set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
+  EM.setNSlot(4); // set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
 
-  EM.setMesType(RES);     //choose measure type; resistance(RES) or CAP(capacitance)
-  EM.setPullType(PULLUP); //choose whether to pull up or down the reference resistors
-                              //one of these: PULLUP, PULLDOWN, INPUT_PULLUP
-                              
+  EM.setMesType(RES);     // choose measure type; resistance(RES) or CAP(capacitance)
+  EM.setPullType(PULLUP); // choose whether to pull up or down the reference resistors
+                          // one of these: PULLUP, PULLDOWN, INPUT_PULLUP
+
   // EM.setOffset(200);    // uncomment to enable busting sticks
   EM.setWeight(weight);
   // EM.setModeButton(button_mode); // uncomment to enable mode buttons
@@ -80,14 +74,14 @@ setup()
 
   Wire1.setSDA(_SDA1);
   Wire1.setSCL(_SCL1); // set I2C pins
-  Wire1.begin(); //tweak pins_arduino.h for second I2C
-  
+  Wire1.begin();       // tweak pins_arduino.h for second I2C
+
   EM.setDisplay(oled);
   EM.setI2CAddress(i2c_address);
   EM.initDisplay();
 
   EM.initExtADC();
-  EM.setExtADC(/*setGain*/ 1, /*ADC Resolution*/16, /*VCC*/3.3f);
+  EM.setExtADC(/*setGain*/ 1, /*ADC Resolution*/ 16, /*VCC*/ 3.3f);
   EM.begin();
 }
 void
