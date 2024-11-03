@@ -72,33 +72,33 @@ const char U8X8_CHAR_CHECK = '\x40';
 const char U8X8_CHAR_RIICHI = '\x20';
 const char U8X8_CHAR_HONBA = '\x21';
 
-EiMOS_U8X8::EiMOS_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[]) :
-    EiMOS(mux, env, pin, val)
+EiMOS_U8X8::EiMOS_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[])
+    : EiMOS(mux, env, pin, val)
 {
   setDisplay(u8x8);
 }
-EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog[], float v_unit[], float ref[]) :
-    EiMOS(charge, analog, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog[], float v_unit[], float ref[])
+    : EiMOS(charge, analog, v_unit, ref)
 {
 }
-EiMOS_U8X8::EiMOS_U8X8(int analog[], float v_unit[], float ref[]) :
-    EiMOS(analog, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(int analog[], float v_unit[], float ref[])
+    : EiMOS(analog, v_unit, ref)
 {
 }
-EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog, float v_unit[], float ref[]) :
-    EiMOS(charge, analog, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog, float v_unit[], float ref[])
+    : EiMOS(charge, analog, v_unit, ref)
 {
 }
-EiMOS_U8X8::EiMOS_U8X8(int analog, float v_unit[], float ref[]) :
-    EiMOS(analog, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(int analog, float v_unit[], float ref[])
+    : EiMOS(analog, v_unit, ref)
 {
 }
-EiMOS_U8X8::EiMOS_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[]) :
-    EiMOS(charge, ext_adc, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
+    : EiMOS(charge, ext_adc, v_unit, ref)
 {
 }
-EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[]) :
-    EiMOS(ext_adc, v_unit, ref)
+EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
+    : EiMOS(ext_adc, v_unit, ref)
 {
 }
 
