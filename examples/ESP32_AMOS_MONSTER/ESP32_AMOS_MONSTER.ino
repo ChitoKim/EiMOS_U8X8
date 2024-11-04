@@ -10,7 +10,7 @@ int button_honba = 18;
 // If you only use 3 score stick bins per player, write the 3th value as 1000.0f.
 float RES_AMOS_MONSTER[] = {
   // in kiloohms
-  20.0f, 100.0f, 1000.0f, 1000.0f};
+  20.0f, 100.0f, 200.0f, 1000.0f};
 
 #if REF_CORRECTION_DIMENTION == 1
 // in kiloohms
