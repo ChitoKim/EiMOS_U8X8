@@ -74,6 +74,7 @@ class EiMOS_U8X8 : public EiMOS
   EiMOS_U8X8(int analog, float v_unit[], float ref[]);
   EiMOS_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[]);
   EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[]);
+  EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[][4]);
   U8X8 **getU8X8();
   void setNullU8X8();
   void setDisplay(U8X8 *u8x8[]);
