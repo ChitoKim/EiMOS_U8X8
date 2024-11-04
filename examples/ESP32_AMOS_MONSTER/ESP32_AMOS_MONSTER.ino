@@ -6,12 +6,22 @@ int button_mode[] = {
   // if you don't want to, use other pins
 };
 int button_honba = 18;
+
+// If you only use 3 score stick bins per player, write the 3th value as 1000.0f.
 float RES_AMOS_MONSTER[] = {
   // in kiloohms
   20.0f, 100.0f, 1000.0f, 1000.0f};
-float R_REF[] = {
-  // in kiloohms
-  10.0f, 10.0f, 10.0f, 10.0f};
+
+#if REF_CORRECTION_DIMENTION == 1
+// in kiloohms
+float R_REF[] = {10.0f, 10.0f, 10.0f, 10.0f};
+#elif REF_CORRECTION_DIMENTION == 2
+// If you only use 3 score stick bins per player, write the 4th value as 0.
+// {{9.90f, 9.95f, 98.9f, 0}, {9.94f, 9.94f, 98.1f, 0}, {10.00f, 9.96f, 98.3f, 0}, {9.86f, 9.95f, 98.8f, 0}};
+// Fill in the actual resistance values in order from player #1's score stick bin #1 to player #4's score stick bin #4.
+// in kiloohms
+float R_REF[4][4] = {{9.90f, 9.95f, 98.9f, 98.9f}, {9.94f, 9.94f, 98.1f, 101.2f}, {10.00f, 9.96f, 98.3f, 101.1f}, {9.86f, 9.95f, 98.8f, 98.0f}};
+#endif
 
 ADS1115 ADC0(0x48, &Wire);
 ADS1115 ADC1(0x49, &Wire);
@@ -47,7 +57,16 @@ U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled3(U8X8_PIN_NONE);
 U8X8 oled[] = {oled0, oled1, oled2, oled3};
 
 int i2c_address[4] = {0x78, 0x7A, 0x78, 0x7A};
+#if REF_CORRECTION_DIMENTION == 1
+// in kiloohms
 float weight[] = {0.3f, 0.3f, 0.3f, 0.3f};
+#elif REF_CORRECTION_DIMENTION == 2
+// If you only use 3 score stick bins per player, write the 4th value as 0.
+// {{0.3f, 0.3f, 0.55f, 0}, {0.3f, 0.3f, 0.55f, 0}, {0.3f, 0.3f, 0.6f, 0}, {0.3f, 0.3f, 0.6f, 0}};
+// Fill in the actual resistance values in order from player #1's score stick bin #1 to player #4's score stick bin #4.
+// in kiloohms
+float weight[4][4] = {{0.3f, 0.3f, 0.55f, 0.5f}, {0.3f, 0.3f, 0.55f, 0.57f}, {0.3f, 0.3f, 0.6f, 0.6f}, {0.3f, 0.3f, 0.6f, 0.43f}};
+#endif
 enum I2CPIN
 {
   _SDA0 = 19,
