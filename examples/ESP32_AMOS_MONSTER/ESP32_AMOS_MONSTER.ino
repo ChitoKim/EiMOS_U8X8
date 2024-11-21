@@ -86,6 +86,7 @@ setup()
 
   // EM.setOffset(200);    // uncomment to enable busting sticks
   EM.setWeight(weight);
+  EM.setDebounceCount(3); // higher numbers provide more accurate scoring, but also take longer to score. (minimum value : 0)
   // EM.setModeButton(button_mode); // uncomment to enable mode buttons
   // EM.setHonbaButton(button_honba); // uncomment to enable a honba button
 
