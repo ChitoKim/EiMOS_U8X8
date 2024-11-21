@@ -102,6 +102,11 @@ EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
 {
 }
 
+EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[][4])
+    : EiMOS(ext_adc, v_unit, ref)
+{
+}
+
 void
 EiMOS_U8X8::setDisplay(U8X8 *u8x8[])
 {
