@@ -5,7 +5,9 @@ int button_mode[] = {
   // so, add external pullup on these
   // if you don't want to, use other pins
 };
-int button_honba = 18;
+int button_honba[] = {27, 14, 12, 13};
+int button_headcount = 34;
+int button_tobi = 35;
 
 // If you only use 3 score stick bins per player, write the 3th value as 1000.0f.
 float RES_AMOS_MONSTER[] = {
@@ -78,17 +80,27 @@ enum I2CPIN
 void
 setup()
 {
+  // 토비나시, 3마4마 변경??
+  pinMode(button_headcount, INPUT_PULLUP);
+  pinMode(button_tobi, INPUT_PULLUP);
+
   EM.setNSlot(4); // set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
 
   EM.setMesType(RES);     // choose measure type; resistance(RES) or CAP(capacitance)
   EM.setPullType(PULLUP); // choose whether to pull up or down the reference resistors
                           // one of these: PULLUP, PULLDOWN, INPUT_PULLUP
 
+  if(digitalRead(button_tobi) == LOW)
+  {
+    EM.setOffset(200); // uncomment to enable busting sticks
+  }
+
   // EM.setOffset(200);    // uncomment to enable busting sticks
   EM.setWeight(weight);
-  EM.setDebounceCount(3); // higher numbers provide more accurate scoring, but also take longer to score. (minimum value : 0)
-  // EM.setModeButton(button_mode); // uncomment to enable mode buttons
-  // EM.setHonbaButton(button_honba); // uncomment to enable a honba button
+  EM.setDebounceCount(3);          // higher numbers provide more accurate scoring, but also take longer to score. (minimum value : 0)
+  EM.setModeButton(button_mode);   // uncomment to enable mode buttons
+  EM.setHonbaButton(button_honba); // uncomment to enable a honba button
+  EM.setSeatButton(digitalRead(button_headcount) ? PIN_NONE : button_headcount);
 
   Wire.begin(_SDA0, _SCL0);
   Wire1.begin(_SDA1, _SCL1); // tweak pins_arduino.h for second I2C
