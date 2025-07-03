@@ -46,21 +46,15 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <EiMOS.h>
 #include <U8x8lib.h>
 
-class EiMOS_U8X8 : public EiMOS
+class EiMOS_U8X8 : public EiMOS_DP
 {
  private:
   unsigned long lastDisplayTime = 0L;
   U8X8 *u8x8_p[4] = {nullptr, nullptr, nullptr, nullptr};
 
  public:
-  EiMOS_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[]);
-  EiMOS_U8X8(int charge[], int analog[], float v_unit[], float ref[]);
-  EiMOS_U8X8(int analog[], float v_unit[], float ref[]);
-  EiMOS_U8X8(int charge[], int analog, float v_unit[], float ref[]);
-  EiMOS_U8X8(int analog, float v_unit[], float ref[]);
-  EiMOS_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[]);
-  EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[]);
-  EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[][4]);
+  EiMOS_U8X8(U8X8 *u8x8[]);
+  void show(Results *results) override;
   U8X8 **getU8X8();
   void setNullU8X8();
   void setDisplay(U8X8 *u8x8[]);
@@ -68,8 +62,8 @@ class EiMOS_U8X8 : public EiMOS
   void initDisplay();
   void setI2CAddress(int a, int b);
   void setI2CAddress(int a[]);
-  void scoreDisplay(int player);
-  void scoreDisplayLoop(int period = 0);
+  void scoreDisplay(Results* results, int player);
+  void scoreDisplayLoop(Results* results, int period = 0);
   int right(int player);
   int facing(int player);
   int left(int player);

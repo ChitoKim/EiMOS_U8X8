@@ -59,39 +59,9 @@ const char U8X8_CHAR_CHECK = '\x40';
 const char U8X8_CHAR_RIICHI = '\x20';
 const char U8X8_CHAR_HONBA = '\x21';
 
-EiMOS_U8X8::EiMOS_U8X8(MUX *mux, ENV *env, PIN *pin, VAL *val, U8X8 *u8x8[])
-    : EiMOS(mux, env, pin, val)
+EiMOS_U8X8::EiMOS_U8X8(U8X8 *u8x8[])
 {
   setDisplay(u8x8);
-}
-EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog[], float v_unit[], float ref[])
-    : EiMOS(charge, analog, v_unit, ref)
-{
-}
-EiMOS_U8X8::EiMOS_U8X8(int analog[], float v_unit[], float ref[])
-    : EiMOS(analog, v_unit, ref)
-{
-}
-EiMOS_U8X8::EiMOS_U8X8(int charge[], int analog, float v_unit[], float ref[])
-    : EiMOS(charge, analog, v_unit, ref)
-{
-}
-EiMOS_U8X8::EiMOS_U8X8(int analog, float v_unit[], float ref[])
-    : EiMOS(analog, v_unit, ref)
-{
-}
-EiMOS_U8X8::EiMOS_U8X8(int charge[], ADS1X15 *ext_adc[], float v_unit[], float ref[])
-    : EiMOS(charge, ext_adc, v_unit, ref)
-{
-}
-EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[])
-    : EiMOS(ext_adc, v_unit, ref)
-{
-}
-
-EiMOS_U8X8::EiMOS_U8X8(ADS1X15 *ext_adc[], float v_unit[], float ref[][4])
-    : EiMOS(ext_adc, v_unit, ref)
-{
 }
 
 void
@@ -157,16 +127,16 @@ EiMOS_U8X8::setI2CAddress(int a[])
   }
 }
 void
-EiMOS_U8X8::scoreDisplay(int player)
+EiMOS_U8X8::scoreDisplay(Results * results, int player)
 {
   // display scores onto the LCD display
   // mode: NORMAL(actual score) or DIFF(difference to my score)
   // err[]: check if sticks are in wrong places
-  int *score = this->getScore();
-  int *error = this->getError();
-  int mode = (this->getMode())[player];
-  int honba = this->getHonba();
-  const int emptySeat = this->getEmptySeat();
+  int *score = results->score;
+  int *error = results->error;
+  int mode = (results->mode)[player];
+  int honba = results->honba;
+  const int emptySeat = results->emptySeat;
   U8X8 *dis = (this->u8x8_p)[player];
 
   int score_self = score[player];
@@ -177,7 +147,7 @@ EiMOS_U8X8::scoreDisplay(int player)
   int total = 0;
   int digit[4]; // numbers actually displayed; usually score itself
   char buffer[20];
-  const unsigned int TOTAL_SCORE = getTotalScore();
+  const unsigned int TOTAL_SCORE = results->totalScore;
 
   for(int i = 0; i < 4; i++)
   {
@@ -187,7 +157,7 @@ EiMOS_U8X8::scoreDisplay(int player)
     else if(mode == DIFF)
       digit[i] = score[i] - score_self;
     else if(mode == PM)
-      digit[i] = score[i] - getTotalScore() / (getEmptySeat() == -1 ? 4 : 3);
+      digit[i] = score[i] - TOTAL_SCORE / (emptySeat == -1 ? 4 : 3);
   }
   dis->setFont(_font);
 
@@ -326,10 +296,10 @@ EiMOS_U8X8::scoreDisplay(int player)
   dis->print(" ");
   dis->setCursor(14, 6);
   dis->setFont(_font_mini);
-  dis->print(getEmptySeat() == -1 ? "4P" : "3P");
+  dis->print(emptySeat == -1 ? "4P" : "3P");
 }
 void
-EiMOS_U8X8::scoreDisplayLoop(int period)
+EiMOS_U8X8::scoreDisplayLoop(Results *results, int period)
 {
   // display the four scores on four displays, if mode is PM, delay some time(default 0)
   int i;
@@ -338,10 +308,15 @@ EiMOS_U8X8::scoreDisplayLoop(int period)
   {
     for(i = 0; i < 4; i++)
     {
-      this->scoreDisplay(i);
+      this->scoreDisplay(results, i);
     }
     lastDisplayTime = currentTime;
   }
+}
+void
+EiMOS_U8X8::show(Results *results)
+{
+  scoreDisplayLoop(results);
 }
 
 // below three functions return one of the other players
