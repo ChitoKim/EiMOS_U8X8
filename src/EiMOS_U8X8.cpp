@@ -127,7 +127,7 @@ EiMOS_U8X8::setI2CAddress(int a[])
   }
 }
 void
-EiMOS_U8X8::scoreDisplay(Results * results, int player)
+EiMOS_U8X8::scoreDisplay(Results *results, int player)
 {
   // display scores onto the LCD display
   // mode: NORMAL(actual score) or DIFF(difference to my score)
@@ -317,6 +317,20 @@ void
 EiMOS_U8X8::show(Results *results)
 {
   scoreDisplayLoop(results);
+}
+
+void
+EiMOS_U8X8::show(const char *str)
+{
+  for(int i = 0; i < 4; i++)
+  { 
+    U8X8 *u8x8 = u8x8_p[i];
+    u8x8->setFont(_font);
+    u8x8->setCursor(0,0);
+    u8x8->print("Player");
+    u8x8->print(i);
+    u8x8->print(str);
+  }
 }
 
 // below three functions return one of the other players

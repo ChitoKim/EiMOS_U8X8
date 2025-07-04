@@ -55,6 +55,7 @@ class EiMOS_U8X8 : public EiMOS_DP
  public:
   EiMOS_U8X8(U8X8 *u8x8[]);
   void show(Results *results) override;
+  void show(const char *str) override;
   U8X8 **getU8X8();
   void setNullU8X8();
   void setDisplay(U8X8 *u8x8[]);
@@ -62,8 +63,8 @@ class EiMOS_U8X8 : public EiMOS_DP
   void initDisplay();
   void setI2CAddress(int a, int b);
   void setI2CAddress(int a[]);
-  void scoreDisplay(Results* results, int player);
-  void scoreDisplayLoop(Results* results, int period = 0);
+  void scoreDisplay(Results *results, int player);
+  void scoreDisplayLoop(Results *results, int period = 0);
   int right(int player);
   int facing(int player);
   int left(int player);
