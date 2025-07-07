@@ -322,6 +322,7 @@ EiMOS_U8X8::show(Results *results)
 void
 EiMOS_U8X8::show(const char *str)
 {
+  //For debugging
   for(int i = 0; i < 4; i++)
   { 
     U8X8 *u8x8 = u8x8_p[i];
