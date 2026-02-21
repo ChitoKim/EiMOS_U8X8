@@ -1,5 +1,5 @@
+#include <EiMOS_RLC.h>
 #include <EiMOS_U8X8.h>
-
 #define SCL0 22
 #define SDA0 23
 #define SCL1 24
@@ -27,38 +27,40 @@ float CAP_CENTURY_GOLD[] = {
 float CAP_CENTURY_SILVER[] = {
   225.0f, 10.0f, 1.0f, 1.0f};
 float R_REF[] = {
-  // internal pullup resistor
-  34.8f, 34.8f, 34.8f, 34.8f};
+  // internal pullup resistor is 34.8k
+  //34.8f, 34.8f, 34.8f, 34.8f
+  100.0f, 100.0f, 100.0f, 100.0f
+};
 float CENTURY_GOLD_R_PAR[] = {
   1000.0f, PIN_NONE, PIN_NONE, PIN_NONE};
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled0(SCL0, SDA0, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled1(SCL1, SDA1, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled2(SCL2, SDA2, U8X8_PIN_NONE);
 U8X8_SSD1306_128X64_NONAME_SW_I2C oled3(SCL3, SDA3, U8X8_PIN_NONE);
-U8X8 u8x8[4] = {oled0, oled1, oled2, oled3};
+U8X8 *oled[4] = {&oled0, &oled1, &oled2, &oled3};
 
-EiMOS_U8X8 EM(charge_pin, analog_pin, CAP_CENTURY_GOLD, R_REF); // CENTURY TENPAL, GOLD sticks
-// EiMOS_U8X8 EM(charge_pin, analog_pin, CAP_CENTURY_SILVER, R_REF); //CENTURY TENPAL, SILVER sticks
+EiMOS_RLC RLC(charge_pin, analog_pin, CAP_CENTURY_GOLD, R_REF); // CENTURY TENPAL, GOLD sticks
+// EiMOS_RLC RLC(charge_pin, analog_pin, CAP_CENTURY_SILVER, R_REF); //CENTURY TENPAL, SILVER sticks
+
+EiMOS_U8X8 OLED(oled);
 
 void
 setup()
 {
-  int i;
-  EM.setNSlot(3);
-  EM.setPullType(INPUT_PULLUP);
-  EM.setADCResolution(10);
-  // EM.setOffset(200);
-  EM.setMesType(CAP);
-  EM.setParRes(CENTURY_GOLD_R_PAR);
-  EM.setDisplay(u8x8);
-  EM.initDisplay();
-  EM.setModeButton(button_mode);
-  EM.setHonbaButton(button_honba);
-  EM.begin();
+  RLC.setNSlot(3);
+  RLC.setPullType(INPUT_PULLUP);
+  RLC.setADCResolution(10);
+  // RLC.setOffset(200);
+  RLC.setMesType(CAP);
+  RLC.setParRes(CENTURY_GOLD_R_PAR);
+  OLED.initDisplay();
+  RLC.setModeButton(button_mode);
+  RLC.setHonbaButton(button_honba);
+  RLC.begin();
 }
 void
 loop()
 {
-  EM.loop();
-  EM.scoreDisplayLoop();
+  RLC.measure();
+  OLED.show(RLC.getResults());
 }

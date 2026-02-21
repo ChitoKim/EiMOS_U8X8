@@ -1,3 +1,4 @@
+#include <EiMOS_RLC.h>
 #include <EiMOS_U8X8.h>
 int button_mode[] = {
   6, 7, 8, 9};
@@ -17,7 +18,6 @@ ADS1115 ADC2(0x48, &Wire1);
 ADS1115 ADC3(0x49, &Wire1);
 
 ADS1X15 *adc[] = {&ADC0, &ADC1, &ADC2, &ADC3};
-EiMOS_U8X8 EM(adc, RES_AMOS_MONSTER, R_REF);
 
 /* Hardware I2C*/
 U8X8_SSD1306_128X64_NONAME_HW_I2C oled0(U8X8_PIN_NONE);
@@ -42,10 +42,11 @@ U8X8_SSD1306_128X64_NONAME_2ND_HW_I2C oled3(U8X8_PIN_NONE);
 // U8X8_SSD1306_128X64_NONAME_SW_I2C oled2(SW_SCL2, SW_SDA2, U8X8_PIN_NONE);
 // U8X8_SSD1306_128X64_NONAME_SW_I2C oled3(SW_SCL3, SW_SDA3, U8X8_PIN_NONE);
 
-U8X8 oled[] = {oled0, oled1, oled2, oled3};
+U8X8 *oled[] = {&oled0, &oled1, &oled2, &oled3};
 
 int i2c_address[4] = {0x78, 0x7A, 0x78, 0x7A};
 float weight[] = {0.3f, 0.3f, 0.3f, 0.3f};
+
 enum I2CPIN
 {
   _SDA0 = 4,
@@ -54,17 +55,20 @@ enum I2CPIN
   _SCL1 = 3
 };
 
+EiMOS_RLC RLC(adc, RES_AMOS_MONSTER, R_REF);
+EiMOS_U8X8 OLED(oled);
+
 void
 setup()
 {
-  EM.setNSlot(4); // set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
+  RLC.setNSlot(4); // set number of slots; 5k 1k 100 (NSLOT = 3), or 5k 1k 100 100 (NSLOT = 4)
 
-  EM.setMesType(RES);     // choose measure type; resistance(RES) or CAP(capacitance)
-  EM.setPullType(PULLUP); // choose whether to pull up or down the reference resistors
+  RLC.setMesType(RES);     // choose measure type; resistance(RES) or CAP(capacitance)
+  RLC.setPullType(PULLUP); // choose whether to pull up or down the reference resistors
                           // one of these: PULLUP, PULLDOWN, INPUT_PULLUP
 
-  // EM.setOffset(200);    // uncomment to enable busting sticks
-  EM.setWeight(weight);
+  // RLC.setOffset(200);    // uncomment to enable busting sticks
+  RLC.setWeight(weight);
   // EM.setModeButton(button_mode); // uncomment to enable mode buttons
   // EM.setHonbaButton(button_honba); // uncomment to enable a honba button
 
@@ -76,17 +80,17 @@ setup()
   Wire1.setSCL(_SCL1); // set I2C pins
   Wire1.begin();       // tweak pins_arduino.h for second I2C
 
-  EM.setDisplay(oled);
-  EM.setI2CAddress(i2c_address);
-  EM.initDisplay();
+  OLED.setI2CAddress(i2c_address);
+  OLED.initDisplay();
 
-  EM.initExtADC();
-  EM.setExtADC(/*setGain*/ 1, /*ADC Resolution*/ 16, /*VCC*/ 3.3f);
-  EM.begin();
+  RLC.initExtADC();
+  RLC.setExtADC(/*setGain*/ 1, /*ADC Resolution*/ 16, /*VCC*/ 3.3f);
+  RLC.begin();
 }
+
 void
 loop()
 {
-  EM.loop(500);
-  EM.scoreDisplayLoop(500);
+  RLC.measure();
+  OLED.show(RLC.getResults());
 }
